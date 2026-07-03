@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ravino — Turn Your Life Into an MMO</title>
+<meta name="description" content="Ravino turns real-life tasks into quests, XP, coins, and guild raids. Level up your life with fair play and no pay-to-win." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            gold: '#F5A623',
+            goldHover: '#FFB84D',
+            goldPressed: '#D89416',
+            navy: '#182341',
+          },
+          primary: {
+            DEFAULT: '#2EDB9A',
+            hover: '#22C98A',
+            pressed: '#18B47A',
+          },
+          xp: { DEFAULT: '#17BFFF', hover: '#45CDFF' },
+          epic: '#8B5CF6',
+          warning: '#FF8A3D',
+          danger: '#FF4B4B',
+          bg: {
+            0: '#0B1020',
+            1: '#101A33',
+            2: '#131E38',
+          },
+          surface: {
+            1: '#182341',
+            2: '#1E2A4F',
+            3: '#25345E',
+          },
+          txt: {
+            main: '#F4F7FF',
+            muted: '#A7B0C7',
+            soft: '#8892B0',
+          },
+        },
+        fontFamily: {
+          display: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        boxShadow: {
+          'glow-gold': '0 0 30px rgba(245, 166, 35, 0.25)',
+          'glow-teal': '0 0 30px rgba(46, 219, 154, 0.25)',
+          'glow-xp': '0 0 25px rgba(23, 191, 255, 0.3)',
+          'card': '0 4px 24px rgba(0, 0, 0, 0.3)',
+          'card-hover': '0 12px 40px rgba(0, 0, 0, 0.4)',
+        },
+        animation: {
+          'float': 'float 6s ease-in-out infinite',
+          'float-slow': 'float 8s ease-in-out infinite',
+          'pulse-slow': 'pulse 4s ease-in-out infinite',
+          'shimmer': 'shimmer 2.5s linear infinite',
+          'glow': 'glow 3s ease-in-out infinite',
+        },
+        keyframes: {
+          float: {
+            '0%, 100%': { transform: 'translateY(0px)' },
+            '50%': { transform: 'translateY(-12px)' },
+          },
+          shimmer: {
+            '0%': { backgroundPosition: '-200% 0' },
+            '100%': { backgroundPosition: '200% 0' },
+          },
+          glow: {
+            '0%, 100%': { boxShadow: '0 0 20px rgba(245, 166, 35, 0.3)' },
+            '50%': { boxShadow: '0 0 40px rgba(245, 166, 35, 0.5)' },
+          },
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background: #0B1020;
+    color: #F4F7FF;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* Gradient mesh background */
+  .hero-mesh {
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(245, 166, 35, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 60% at 80% 30%, rgba(46, 219, 154, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 50% at 50% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+      #0B1020;
+  }
+
+  /* Grid pattern overlay */
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(245, 166, 35, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 166, 35, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+  /* Gradient text */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #F5A623 0%, #FFB84D 50%, #D89416 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-teal {
+    background: linear-gradient(135deg, #2EDB9A 0%, #17BFFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shimmer effect */
+  .shimmer-bg {
+    background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(245, 166, 35, 0.08) 50%,
+      rgba(255, 255, 255, 0) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  /* Card glass */
+  .glass-card {
+    background: linear-gradient(135deg, rgba(30, 42, 79, 0.6) 0%, rgba(24, 35, 65, 0.4) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(245, 166, 35, 0.12);
+  }
+  .glass-card:hover {
+    border-color: rgba(245, 166, 35, 0.3);
+  }
+
+  /* Quest card float animation */
+  .quest-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .quest-float-delayed {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+  .quest-float-slow {
+    animation: float 8s ease-in-out infinite;
+    animation-delay: -4s;
+  }
+
+  /* XP bar animation */
+  .xp-bar-fill {
+    background: linear-gradient(90deg, #17BFFF 0%, #2EDB9A 100%);
+    box-shadow: 0 0 12px rgba(23, 191, 255, 0.6);
+    animation: pulse-bar 2s ease-in-out infinite;
+  }
+  @keyframes pulse-bar {
+    0%, 100% { box-shadow: 0 0 8px rgba(23, 191, 255, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(23, 191, 255, 0.8); }
+  }
+
+  /* Button hover effect */
+  .btn-primary {
+    background: linear-gradient(135deg, #2EDB9A 0%, #22C98A 100%);
+    box-shadow: 0 4px 20px rgba(46, 219, 154, 0.3);
+    transition: all 0.3s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(46, 219, 154, 0.5);
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, #F5A623 0%, #FFB84D 100%);
+    box-shadow: 0 4px 20px rgba(245, 166, 35, 0.3);
+    transition: all 0.3s ease;
+  }
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(245, 166, 35, 0.5);
+  }
+  .btn-ghost {
+    transition: all 0.3s ease;
+  }
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Feature card hover */
+  .feature-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .feature-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(245, 166, 35, 0.4) !important;
+  }
+
+  /* Marquee */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 30s linear infinite;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Glow orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #0B1020; }
+  ::-webkit-scrollbar-thumb { background: #25345E; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #F5A623; }
+
+  /* Tier badges */
+  .tier-self { background: rgba(148, 163, 184, 0.15); color: #94A3B8; border: 1px solid rgba(148, 163, 184, 0.3); }
+  .tier-timer { background: rgba(23, 191, 255, 0.15); color: #17BFFF; border: 1px solid rgba(23, 191, 255, 0.3); }
+  .tier-photo { background: rgba(245, 166, 35, 0.15); color: #F5A623; border: 1px solid rgba(245, 166, 35, 0.3); }
+  .tier-peer { background: rgba(139, 92, 246, 0.15); color: #8B5CF6; border: 1px solid rgba(139, 92, 246, 0.3); }
+  .tier-sensor { background: rgba(46, 219, 154, 0.15); color: #2EDB9A; border: 1px solid rgba(46, 219, 154, 0.3); }
+
+  /* Link hover */
+  .nav-link {
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #F5A623;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* Coin shine */
+  .coin-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .coin-shine::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: coinShine 3s ease-in-out infinite;
+  }
+  @keyframes coinShine {
+    0%, 100% { left: -100%; }
+    50% { left: 150%; }
+  }
+
+  /* Stat counter */
+  .stat-num {
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+<body class="bg-bg-0 text-txt-main">
+
+<!-- ============ NAVBAR ============ -->
+<nav class="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-bg-0/80 border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-gold to-brand-goldPressed flex items-center justify-center shadow-glow-gold group-hover:scale-110 transition-transform">
+        <svg class="w-6 h-6 text-bg-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm-1 6h2v2h-2v-2zm0 4h2v6h-2v-6z"/>
+        </svg>
+      </div>
+      <span class="text-xl font-bold font-display">Ravino</span>
+    </a>
+
+    <div class="hidden lg:flex items-center gap-8">
+      <a href="#features" class="nav-link text-sm font-medium text-txt-muted hover:text-txt-main">Features</a>
+      <a href="#how-it-works" class="nav-link text-sm font-medium text-txt-muted hover:text-txt-main">How it works</a>
+      <a href="#verification" class="nav-link text-sm font-medium text-txt-muted hover:text-txt-main">Verification</a>
+      <a href="/leaderboard" class="nav-link text-sm font-medium text-txt-muted hover:text-txt-main">Leaderboards</a>
+      <a href="/guilds" class="nav-link text-sm font-medium text-txt-muted hover:text-txt-main">Guilds</a>
+      <a href="/shop" class="nav-link text-sm font-medium text-txt-muted hover:text-txt-main">Shop</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="/login" class="hidden sm:inline-flex btn-ghost px-5 py-2.5 rounded-full text-sm font-semibold text-txt-muted hover:text-txt-main">
+        Sign in
+      </a>
+      <a href="/register" class="btn-primary px-6 py-2.5 rounded-full text-sm font-bold text-bg-0 inline-flex items-center gap-2">
+        Start Quest
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="relative min-h-screen hero-mesh overflow-hidden pt-32 pb-20">
+  <!-- Grid overlay -->
+  <div class="absolute inset-0 grid-pattern pointer-events-none"></div>
+
+  <!-- Glow orbs -->
+  <div class="orb w-96 h-96 bg-brand-gold top-20 -left-20 animate-pulse-slow"></div>
+  <div class="orb w-[500px] h-[500px] bg-primary top-40 right-0 animate-pulse-slow" style="animation-delay: -2s;"></div>
+  <div class="orb w-80 h-80 bg-epic bottom-20 left-1/3 animate-pulse-slow" style="animation-delay: -4s;"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+    <!-- Left: Text content -->
+    <div class="relative z-10">
+      <!-- Beta badge -->
+      <a href="/register" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-wider mb-6 hover:bg-brand-gold/20 transition-colors">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
+        </span>
+        Season 1 · Live
+      </a>
+
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold font-display leading-[1.05] tracking-tight mb-6">
+        Turn your <span class="text-gradient-gold">real life</span> into an <span class="text-gradient-teal">MMO</span>
+      </h1>
+
+      <p class="text-lg md:text-xl text-txt-muted leading-relaxed mb-8 max-w-xl">
+        Complete quests. Earn XP and coins. Level up. Form guilds, conquer raids, and climb fair leaderboards.
+        <span class="text-txt-main font-semibold">No pay-to-win. Ever.</span>
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 mb-10">
+        <a href="/register" class="btn-gold px-8 py-4 rounded-full text-base font-bold text-bg-0 inline-flex items-center justify-center gap-2 group">
+          <span>Create free account</span>
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="#how-it-works" class="btn-ghost px-8 py-4 rounded-full text-base font-bold text-txt-main border border-white/10 inline-flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/>
+          </svg>
+          Watch the loop
+        </a>
+      </div>
+
+      <!-- Social proof -->
+      <div class="flex items-center gap-6">
+        <div class="flex -space-x-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-gold to-epic border-2 border-bg-0 flex items-center justify-center text-xs font-bold">AK</div>
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-xp border-2 border-bg-0 flex items-center justify-center text-xs font-bold">LM</div>
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-epic to-brand-gold border-2 border-bg-0 flex items-center justify-center text-xs font-bold">ZR</div>
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-xp to-primary border-2 border-bg-0 flex items-center justify-center text-xs font-bold">+9k</div>
+        </div>
+        <div>
+          <div class="flex items-center gap-1 mb-1">
+            <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L13 14.14 8 9.27l9.91-1.27L12 2z"/></svg>
+            <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L13 14.14 8 9.27l9.91-1.27L12 2z"/></svg>
+            <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L13 14.14 8 9.27l9.91-1.27L12 2z"/></svg>
+            <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L13 14.14 8 9.27l9.91-1.27L12 2z"/></svg>
+            <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L13 14.14 8 9.27l9.91-1.27L12 2z"/></svg>
+          </div>
+          <p class="text-xs text-txt-soft">Loved by <span class="text-txt-main font-semibold">9,000+ adventurers</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Animated quest cards -->
+    <div class="relative h-[600px] hidden lg:block">
+      <!-- Background card: completed quest -->
+      <div class="absolute top-0 right-0 w-80 glass-card rounded-2xl p-5 quest-float-slow">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="text-xs font-bold text-primary uppercase tracking-wider">Completed</span>
+          </div>
+          <span class="text-xs font-bold text-brand-gold">+180 XP</span>
+        </div>
+        <h3 class="font-bold text-base mb-1">Morning workout</h3>
+        <p class="text-xs text-txt-muted mb-3">45-minute strength training</p>
+        <div class="flex items-center gap-2">
+          <span class="tier-sensor text-[10px] font-bold px-2 py-0.5 rounded-full">SENSOR</span>
+          <span class="text-[10px] text-txt-soft">10,245 steps verified</span>
+        </div>
+      </div>
+
+      <!-- Middle card: active quest -->
+      <div class="absolute top-48 left-0 w-80 glass-card rounded-2xl p-5 quest-float border-brand-gold/40">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-brand-gold/20 flex items-center justify-center animate-pulse">
+              <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <span class="text-xs font-bold text-brand-gold uppercase tracking-wider">In progress</span>
+          </div>
+          <span class="text-xs font-bold text-xp">+120 XP</span>
+        </div>
+        <h3 class="font-bold text-base mb-1">Deep work session</h3>
+        <p class="text-xs text-txt-muted mb-3">Focus timer · 23:17 remaining</p>
+        <!-- Progress bar -->
+        <div class="h-1.5 bg-bg-1 rounded-full overflow-hidden">
+          <div class="h-full xp-bar-fill" style="width: 78%;"></div>
+        </div>
+      </div>
+
+      <!-- Bottom card: level up -->
+      <div class="absolute bottom-0 right-8 w-72 glass-card rounded-2xl p-5 quest-float-delayed">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="relative">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-brand-gold via-epic to-primary flex items-center justify-center shadow-glow-gold">
+              <span class="text-xl font-black text-bg-0">12</span>
+            </div>
+            <div class="absolute -top-1 -right-1 w-5 h-5 bg-brand-gold rounded-full flex items-center justify-center">
+              <svg class="w-3 h-3 text-bg-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L13 14.14 8 9.27l9.91-1.27L12 2z"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <p class="text-[10px] text-txt-soft uppercase tracking-wider font-bold">Level up!</p>
+            <p class="text-base font-bold">Adventurer</p>
+          </div>
+        </div>
+        <div class="h-1.5 bg-bg-1 rounded-full overflow-hidden mb-2">
+          <div class="h-full bg-gradient-to-r from-brand-gold to-brand-goldHover" style="width: 100%;"></div>
+        </div>
+        <p class="text-xs text-txt-muted">Unlocked: Celestial Frame</p>
+      </div>
+
+      <!-- Floating coin -->
+      <div class="absolute top-32 right-24 w-16 h-16 rounded-full bg-gradient-to-br from-brand-gold to-brand-goldPressed flex items-center justify-center shadow-glow-gold coin-shine animate-float" style="animation-delay: -3s;">
+        <span class="text-2xl font-black text-bg-0">🪙</span>
+      </div>
+
+      <!-- Floating XP orb -->
+      <div class="absolute bottom-32 left-24 w-12 h-12 rounded-full bg-gradient-to-br from-xp to-primary flex items-center justify-center shadow-glow-xp animate-float" style="animation-delay: -1s;">
+        <svg class="w-6 h-6 text-bg-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-pulse-slow">
+    <span class="text-[10px] text-txt-soft uppercase tracking-widest font-bold">Scroll</span>
+    <svg class="w-5 h-5 text-txt-soft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ============ STATS TICKER ============ -->
+<section class="relative py-8 border-y border-white/5 bg-bg-1/50 overflow-hidden">
+  <div class="marquee">
+    <div class="marquee-track gap-16 px-8 whitespace-nowrap">
+      <div class="flex items-center gap-16 px-8">
+        <div class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">12,847 online</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L13 14.14 8 9.27l9.91-1.27L12 2z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">2.4M quests completed</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 8 16 8c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 8 8 8C6.34 8 5 9.34 5 11s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.5V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">482 guilds active</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-epic" viewBox="0 0 24 24" fill="currentColor"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.5 2.78 2.64 3.66V19h-3v2h8v-2h-3v-2.34c1.14-.88 2.01-2.16 2.64-3.66 2.47-.31 4.39-2.39 4.39-4.94V7c0-1.1-.9-2-2-2z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">Season 1 · Week 22</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-warning" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">No pay-to-win</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-danger" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">Fair play verified</span>
+        </div>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="flex items-center gap-16 px-8">
+        <div class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">12,847 online</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L13 14.14 8 9.27l9.91-1.27L12 2z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">2.4M quests completed</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 8 16 8c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 8 8 8C6.34 8 5 9.34 5 11s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.5V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">482 guilds active</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-epic" viewBox="0 0 24 24" fill="currentColor"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.5 2.78 2.64 3.66V19h-3v2h8v-2h-3v-2.34c1.14-.88 2.01-2.16 2.64-3.66 2.47-.31 4.39-2.39 4.39-4.94V7c0-1.1-.9-2-2-2z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">Season 1 · Week 22</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-warning" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">No pay-to-win</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-danger" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          <span class="text-sm font-bold uppercase tracking-widest text-txt-muted">Fair play verified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section id="features" class="relative py-28 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20 reveal">
+      <span class="inline-block px-4 py-1.5 rounded-full bg-epic/10 border border-epic/30 text-epic text-xs font-bold uppercase tracking-widest mb-4">
+        The Core Loop
+      </span>
+      <h2 class="text-4xl md:text-5xl font-extrabold font-display mb-5">
+        Everything is a <span class="text-gradient-gold">quest</span>
+      </h2>
+      <p class="text-lg text-txt-muted max-w-2xl mx-auto">
+        Real tasks, real rewards, real growth. Your daily grind becomes an adventure worth logging into.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Feature 1: Quests -->
+      <a href="/quests" class="feature-card glass-card rounded-2xl p-8 group block reveal">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold to-brand-goldPressed flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-bg-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Quest engine</h3>
+        <p class="text-txt-muted leading-relaxed mb-4">
+          Dailies, weeklies, todos, and long-form projects. Choose from 40+ templates or build your own path.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Dailies</span>
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Weeklies</span>
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Projects</span>
+        </div>
+      </a>
+
+      <!-- Feature 2: Verification -->
+      <a href="#verification" class="feature-card glass-card rounded-2xl p-8 group block reveal" style="transition-delay: 0.1s;">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-xp flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-bg-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">5 verification tiers</h3>
+        <p class="text-txt-muted leading-relaxed mb-4">
+          From self-report to sensor data. Higher proof equals higher rewards. You choose the friction.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tier-self text-xs px-2 py-0.5 rounded-full font-bold">SELF · 1.0×</span>
+          <span class="tier-timer text-xs px-2 py-0.5 rounded-full font-bold">TIMER · 1.2×</span>
+          <span class="tier-photo text-xs px-2 py-0.5 rounded-full font-bold">PHOTO · 1.5×</span>
+        </div>
+      </a>
+
+      <!-- Feature 3: Guilds -->
+      <a href="/guilds" class="feature-card glass-card rounded-2xl p-8 group block reveal" style="transition-delay: 0.2s;">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-epic to-brand-gold flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-bg-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/>
+            <path d="M8 14v.5a4 4 0 0 1-4 4v1h8"/>
+            <path d="M16 14v.5a4 4 0 0 0 4 4v1H8"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Guilds & raids</h3>
+        <p class="text-txt-muted leading-relaxed mb-4">
+          Form parties. Tackle weekly raid bosses. Share the loot. Real accountability, zero social loafing.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">50 members</span>
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Weekly raids</span>
+        </div>
+      </a>
+
+      <!-- Feature 4: Leaderboards -->
+      <a href="/leaderboard" class="feature-card glass-card rounded-2xl p-8 group block reveal" style="transition-delay: 0.1s;">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-warning to-brand-gold flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-bg-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+            <path d="M4 22h16"/>
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 17.61 7 18.84 7 20h10c0-1.16-.85-2.39-1.97-3.79C16.47 15.64 16 15.21 16 14.66V11"/>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Fair leaderboards</h3>
+        <p class="text-txt-muted leading-relaxed mb-4">
+          Cohort leagues of 50. Weekly resets. Only verified XP counts. Toxic-free, opt-in ranked play.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Casual</span>
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Ranked</span>
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Hardcore</span>
+        </div>
+      </a>
+
+      <!-- Feature 5: Economy -->
+      <a href="/shop" class="feature-card glass-card rounded-2xl p-8 group block reveal" style="transition-delay: 0.2s;">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold to-epic flex items-center justify-center mb-5 group-hover:scale-110 transition-transform coin-shine">
+          <span class="text-3xl">🪙</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Balanced economy</h3>
+        <p class="text-txt-muted leading-relaxed mb-4">
+          Earn coins. Buy cosmetics only. Never pay for power. Anti-inflation sinks keep rewards meaningful.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Cosmetics</span>
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Weekly rotation</span>
+        </div>
+      </a>
+
+      <!-- Feature 6: Streaks -->
+      <a href="/streak" class="feature-card glass-card rounded-2xl p-8 group block reveal" style="transition-delay: 0.3s;">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-warning to-danger flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <span class="text-3xl">🔥</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Gentle streaks</h3>
+        <p class="text-txt-muted leading-relaxed mb-4">
+          Missed a day? Grace tokens protect your streak. No shame spirals. Recovery quests welcome you back.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Grace tokens</span>
+          <span class="text-xs px-3 py-1 rounded-full bg-bg-2 border border-white/5">Recovery</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how-it-works" class="relative py-28 px-6 bg-gradient-to-b from-bg-0 to-bg-1/50">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20 reveal">
+      <span class="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-bold uppercase tracking-widest mb-4">
+        The Loop
+      </span>
+      <h2 class="text-4xl md:text-5xl font-extrabold font-display mb-5">
+        Three steps to <span class="text-gradient-teal">level up</span>
+      </h2>
+      <p class="text-lg text-txt-muted max-w-2xl mx-auto">
+        A simple, addictive loop that turns productivity into progression.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 relative">
+      <!-- Connecting line -->
+      <div class="hidden md:block absolute top-24 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-brand-gold via-primary to-epic opacity-30"></div>
+
+      <!-- Step 1 -->
+      <div class="relative reveal">
+        <div class="relative z-10 glass-card rounded-2xl p-8 text-center">
+          <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-brand-gold to-brand-goldPressed flex items-center justify-center mb-6 shadow-glow-gold">
+            <span class="text-3xl font-black text-bg-0">1</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Pick a quest</h3>
+          <p class="text-txt-muted leading-relaxed mb-6">
+            Choose from 40+ templates or create your own. Set difficulty, schedule, and verification tier.
+          </p>
+          <a href="/quests/new" class="inline-flex items-center gap-2 text-brand-gold font-semibold text-sm hover:text-brand-goldHover transition-colors">
+            Create your first quest
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="relative reveal" style="transition-delay: 0.15s;">
+        <div class="relative z-10 glass-card rounded-2xl p-8 text-center">
+          <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-xp flex items-center justify-center mb-6 shadow-glow-teal">
+            <span class="text-3xl font-black text-bg-0">2</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Do & verify</h3>
+          <p class="text-txt-muted leading-relaxed mb-6">
+            Complete the task in real life. Verify with timer, photo, peer review, or device sensors.
+          </p>
+          <a href="#verification" class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:text-xp transition-colors">
+            Explore tiers
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="relative reveal" style="transition-delay: 0.3s;">
+        <div class="relative z-10 glass-card rounded-2xl p-8 text-center">
+          <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-epic to-brand-gold flex items-center justify-center mb-6 shadow-glow-gold">
+            <span class="text-3xl font-black text-bg-0">3</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Earn & climb</h3>
+          <p class="text-txt-muted leading-relaxed mb-6">
+            Collect XP and coins. Level up. Climb leaderboards. Unlock cosmetics. Raid with your guild.
+          </p>
+          <a href="/leaderboard" class="inline-flex items-center gap-2 text-epic font-semibold text-sm hover:text-brand-gold transition-colors">
+            See the leaderboards
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VERIFICATION TIERS ============ -->
+<section id="verification" class="relative py-28 px-6 overflow-hidden">
+  <div class="orb w-96 h-96 bg-epic top-0 right-0 animate-pulse-slow"></div>
+  <div class="orb w-80 h-80 bg-primary bottom-0 left-0 animate-pulse-slow" style="animation-delay: -3s;"></div>
+
+  <div class="relative max-w-7xl mx-auto">
+    <div class="text-center mb-20 reveal">
+      <span class="inline-block px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-widest mb-4">
+        Trust Layers
+      </span>
+      <h2 class="text-4xl md:text-5xl font-extrabold font-display mb-5">
+        Prove it. <span class="text-gradient-gold">Earn more.</span>
+      </h2>
+      <p class="text-lg text-txt-muted max-w-2xl mx-auto">
+        Five tiers of verification. You choose the friction. Higher proof equals higher multipliers.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-5 gap-4">
+      <!-- Tier: SELF -->
+      <a href="/register" class="glass-card rounded-2xl p-6 tier-self border-opacity-30 hover:border-opacity-100 transition-all reveal">
+        <div class="w-12 h-12 rounded-xl bg-gray-500/20 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div class="text-xs font-bold uppercase tracking-widest mb-2">Tier 0</div>
+        <h3 class="text-xl font-bold mb-2">Self-report</h3>
+        <p class="text-xs text-txt-muted mb-4 leading-relaxed">Just check the box. Maximum convenience.</p>
+        <div class="pt-4 border-t border-white/10">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-txt-soft">Multiplier</span>
+            <span class="font-black text-lg">1.0×</span>
+          </div>
+          <div class="h-1 bg-bg-1 rounded-full overflow-hidden">
+            <div class="h-full bg-gray-500" style="width: 55%;"></div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tier: TIMER -->
+      <a href="/register" class="glass-card rounded-2xl p-6 tier-timer border-opacity-30 hover:border-opacity-100 transition-all reveal" style="transition-delay: 0.1s;">
+        <div class="w-12 h-12 rounded-xl bg-xp/20 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="text-xs font-bold uppercase tracking-widest mb-2">Tier 1</div>
+        <h3 class="text-xl font-bold mb-2">Timer</h3>
+        <p class="text-xs text-txt-muted mb-4 leading-relaxed">In-app focus timer with lock-down mode.</p>
+        <div class="pt-4 border-t border-white/10">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-txt-soft">Multiplier</span>
+            <span class="font-black text-lg">1.2×</span>
+          </div>
+          <div class="h-1 bg-bg-1 rounded-full overflow-hidden">
+            <div class="h-full bg-xp" style="width: 66%;"></div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tier: PHOTO -->
+      <a href="/register" class="glass-card rounded-2xl p-6 tier-photo border-opacity-30 hover:border-opacity-100 transition-all reveal" style="transition-delay: 0.2s;">
+        <div class="w-12 h-12 rounded-xl bg-brand-gold/20 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+        <div class="text-xs font-bold uppercase tracking-widest mb-2">Tier 2</div>
+        <h3 class="text-xl font-bold mb-2">Photo</h3>
+        <p class="text-xs text-txt-muted mb-4 leading-relaxed">Visual proof with AI validation.</p>
+        <div class="pt-4 border-t border-white/10">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-txt-soft">Multiplier</span>
+            <span class="font-black text-lg">1.5×</span>
+          </div>
+          <div class="h-1 bg-bg-1 rounded-full overflow-hidden">
+            <div class="h-full bg-brand-gold" style="width: 83%;"></div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tier: PEER -->
+      <a href="/register" class="glass-card rounded-2xl p-6 tier-peer border-opacity-30 hover:border-opacity-100 transition-all reveal" style="transition-delay: 0.3s;">
+        <div class="w-12 h-12 rounded-xl bg-epic/20 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="text-xs font-bold uppercase tracking-widest mb-2">Tier 3</div>
+        <h3 class="text-xl font-bold mb-2">Peer</h3>
+        <p class="text-xs text-txt-muted mb-4 leading-relaxed">Guild members validate your proof.</p>
+        <div class="pt-4 border-t border-white/10">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-txt-soft">Multiplier</span>
+            <span class="font-black text-lg">1.6×</span>
+          </div>
+          <div class="h-1 bg-bg-1 rounded-full overflow-hidden">
+            <div class="h-full bg-epic" style="width: 89%;"></div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tier: SENSOR -->
+      <a href="/register" class="glass-card rounded-2xl p-6 tier-sensor border-opacity-30 hover:border-opacity-100 transition-all reveal" style="transition-delay: 0.4s;">
+        <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-4 animate-glow">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div class="text-xs font-bold uppercase tracking-widest mb-2">Tier 4</div>
+        <h3 class="text-xl font-bold mb-2">Sensor</h3>
+        <p class="text-xs text-txt-muted mb-4 leading-relaxed">Device data. Maximum trust.</p>
+        <div class="pt-4 border-t border-white/10">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-txt-soft">Multiplier</span>
+            <span class="font-black text-lg">1.8×</span>
+          </div>
+          <div class="h-1 bg-bg-1 rounded-full overflow-hidden">
+            <div class="h-full bg-primary" style="width: 100%;"></div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEMO CARD ============ -->
+<section class="relative py-28 px-6 bg-gradient-to-b from-bg-1/50 to-bg-0">
+  <div class="max-w-5xl mx-auto reveal">
+    <div class="text-center mb-16">
+      <span class="inline-block px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-widest mb-4">
+        Live Demo
+      </span>
+      <h2 class="text-4xl md:text-5xl font-extrabold font-display mb-5">
+        See the <span class="text-gradient-gold">loop</span> in action
+      </h2>
+    </div>
+
+    <div class="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+      <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand-gold/10 rounded-full blur-3xl"></div>
+
+      <!-- Demo quest card -->
+      <div class="max-w-2xl mx-auto">
+        <div class="flex items-start justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-gold to-brand-goldPressed flex items-center justify-center">
+              <svg class="w-6 h-6 text-bg-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M9 11l3 3L22 4"/>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-brand-gold uppercase tracking-widest">Daily Quest</p>
+              <h3 class="text-2xl font-bold">Deep work: write 500 words</h3>
+            </div>
+          </div>
+          <span class="tier-photo text-xs font-bold px-3 py-1 rounded-full">PHOTO</span>
+        </div>
+
+        <p class="text-txt-muted mb-6">Write 500 words in your journal, blog, or creative project. Submit a screenshot as proof.</p>
+
+        <!-- Rewards breakdown -->
+        <div class="grid grid-cols-4 gap-3 mb-8">
+          <div class="bg-bg-1/50 rounded-xl p-4 text-center border border-white/5">
+            <p class="text-[10px] text-txt-soft uppercase tracking-widest font-bold mb-1">Base XP</p>
+            <p class="text-xl font-black">100</p>
+          </div>
+          <div class="bg-bg-1/50 rounded-xl p-4 text-center border border-white/5">
+            <p class="text-[10px] text-txt-soft uppercase tracking-widest font-bold mb-1">Tier ×</p>
+            <p class="text-xl font-black text-brand-gold">1.5×</p>
+          </div>
+          <div class="bg-bg-1/50 rounded-xl p-4 text-center border border-white/5">
+            <p class="text-[10px] text-txt-soft uppercase tracking-widest font-bold mb-1">Streak ×</p>
+            <p class="text-xl font-black text-primary">1.25×</p>
+          </div>
+          <div class="bg-gradient-to-br from-brand-gold/20 to-epic/20 rounded-xl p-4 text-center border border-brand-gold/30">
+            <p class="text-[10px] text-txt-soft uppercase tracking-widest font-bold mb-1">Earn</p>
+            <p class="text-xl font-black text-brand-gold">187 XP</p>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="/register" class="btn-primary flex-1 px-6 py-4 rounded-full text-base font-bold text-bg-0 inline-flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Complete this quest
+          </a>
+          <a href="/quests/new" class="btn-ghost px-6 py-4 rounded-full text-base font-bold text-txt-main border border-white/10 inline-flex items-center justify-center gap-2">
+            Create your own
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIAL PROOF / NUMBERS ============ -->
+<section class="relative py-28 px-6 overflow-hidden">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl md:text-5xl font-extrabold font-display mb-5">
+        Real adventurers. <span class="text-gradient-teal">Real progress.</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="glass-card rounded-2xl p-8 text-center reveal">
+        <div class="stat-num text-5xl font-black text-gradient-gold mb-2">9.2k+</div>
+        <p class="text-sm text-txt-muted font-semibold uppercase tracking-widest">Adventurers</p>
+      </div>
+      <div class="glass-card rounded-2xl p-8 text-center reveal" style="transition-delay: 0.1s;">
+        <div class="stat-num text-5xl font-black text-gradient-teal mb-2">2.4M</div>
+        <p class="text-sm text-txt-muted font-semibold uppercase tracking-widest">Quests done</p>
+      </div>
+      <div class="glass-card rounded-2xl p-8 text-center reveal" style="transition-delay: 0.2s;">
+        <div class="stat-num text-5xl font-black text-epic mb-2">482</div>
+        <p class="text-sm text-txt-muted font-semibold uppercase tracking-widest">Active guilds</p>
+      </div>
+      <div class="glass-card rounded-2xl p-8 text-center reveal" style="transition-delay: 0.3s;">
+        <div class="stat-num text-5xl font-black text-xp mb-2">87%</div>
+        <p class="text-sm text-txt-muted font-semibold uppercase tracking-widest">D7 retention</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="relative py-32 px-6 overflow-hidden">
+  <div class="orb w-[600px] h-[600px] bg-brand-gold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
+  <div class="orb w-96 h-96 bg-primary top-0 right-0 animate-pulse-slow" style="animation-delay: -2s;"></div>
+  <div class="orb w-80 h-80 bg-epic bottom-0 left-0 animate-pulse-slow" style="animation-delay: -4s;"></div>
+
+  <div class="relative max-w-4xl mx-auto text-center reveal">
+    <div class="glass-card rounded-3xl p-12 md:p-20 border-brand-gold/30">
+      <span class="inline-block px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-widest mb-6 animate-pulse">
+        Season 1 · Free forever
+      </span>
+      <h2 class="text-4xl md:text-6xl font-extrabold font-display mb-6 leading-tight">
+        Your first quest <br/>
+        <span class="text-gradient-gold">awaits</span>
+      </h2>
+      <p class="text-lg md:text-xl text-txt-muted mb-10 max-w-2xl mx-auto leading-relaxed">
+        Join 9,000+ adventurers turning their daily grind into real progression. No credit card. No pay-to-win. Just your first level-up waiting.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <a href="/register" class="btn-gold px-10 py-5 rounded-full text-lg font-bold text-bg-0 inline-flex items-center justify-center gap-2 group">
+          <span>Create free account</span>
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="/login" class="btn-ghost px-10 py-5 rounded-full text-lg font-bold text-txt-main border border-white/10 inline-flex items-center justify-center gap-2">
+          Sign in
+        </a>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-6 text-xs text-txt-soft">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Free forever
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          No pay-to-win
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Fair leaderboards
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Cancel anytime
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative border-t border-white/5 bg-bg-1/30 py-16 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-5 gap-10 mb-12">
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <a href="/" class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-gold to-brand-goldPressed flex items-center justify-center">
+            <svg class="w-6 h-6 text-bg-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm-1 6h2v2h-2v-2zm0 4h2v6h-2v-6z"/>
+            </svg>
+          </div>
+          <span class="text-xl font-bold font-display">Ravino</span>
+        </a>
+        <p class="text-sm text-txt-muted leading-relaxed mb-6 max-w-xs">
+          Turn your real life into an MMO. Quests, XP, guilds, and fair leaderboards.
+        </p>
+        <div class="flex gap-3">
+          <a href="/register" class="text-xs px-4 py-2 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold font-semibold hover:bg-brand-gold/20 transition-colors">
+            Get started
+          </a>
+          <a href="/login" class="text-xs px-4 py-2 rounded-full border border-white/10 text-txt-muted font-semibold hover:bg-white/5 transition-colors">
+            Sign in
+          </a>
+        </div>
+      </div>
+
+      <!-- Play -->
+      <div>
+        <h4 class="text-sm font-bold text-txt-main uppercase tracking-widest mb-4">Play</h4>
+        <ul class="space-y-3">
+          <li><a href="/dashboard" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Dashboard</a></li>
+          <li><a href="/quests" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Quests</a></li>
+          <li><a href="/quests/new" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Create Quest</a></li>
+          <li><a href="/history" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">History</a></li>
+          <li><a href="/streak" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Streaks</a></li>
+        </ul>
+      </div>
+
+      <!-- Social -->
+      <div>
+        <h4 class="text-sm font-bold text-txt-main uppercase tracking-widest mb-4">Social</h4>
+        <ul class="space-y-3">
+          <li><a href="/guilds" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Guilds</a></li>
+          <li><a href="/guild/create" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Create Guild</a></li>
+          <li><a href="/guild/join" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Join Guild</a></li>
+          <li><a href="/leaderboard" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Leaderboards</a></li>
+          <li><a href="/social" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Social Hub</a></li>
+        </ul>
+      </div>
+
+      <!-- Account -->
+      <div>
+        <h4 class="text-sm font-bold text-txt-main uppercase tracking-widest mb-4">Account</h4>
+        <ul class="space-y-3">
+          <li><a href="/register" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Sign up</a></li>
+          <li><a href="/login" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Sign in</a></li>
+          <li><a href="/profile" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Profile</a></li>
+          <li><a href="/shop" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Shop</a></li>
+          <li><a href="/onboarding" class="text-sm text-txt-muted hover:text-brand-gold transition-colors">Onboarding</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+      <p class="text-xs text-txt-soft">
+        © 2026 Ravino. Designed for adventurers. All rights reserved.
+      </p>
+      <div class="flex flex-wrap justify-center gap-6 text-xs text-txt-soft">
+        <a href="#features" class="hover:text-brand-gold transition-colors">Features</a>
+        <a href="#verification" class="hover:text-brand-gold transition-colors">Verification</a>
+        <a href="#how-it-works" class="hover:text-brand-gold transition-colors">How it works</a>
+        <a href="/leaderboard" class="hover:text-brand-gold transition-colors">Leaderboards</a>
+        <a href="/shop" class="hover:text-brand-gold transition-colors">Shop</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Animate stat numbers on scroll
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-glow');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.stat-num').forEach(el => statObserver.observe(el));
+</script>
+
+</body>
+</html>
+
